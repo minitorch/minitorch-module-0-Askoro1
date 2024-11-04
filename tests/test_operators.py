@@ -8,7 +8,7 @@ from minitorch import MathTest
 import minitorch
 from minitorch.operators import (
     add,
-    addLists,
+    #addLists,
     eq,
     id,
     inv,
@@ -18,11 +18,11 @@ from minitorch.operators import (
     max,
     mul,
     neg,
-    negList,
-    prod,
+    #negList,
+    #prod,
     relu,
     relu_back,
-    sigmoid,
+    sigmoid
 )
 
 from .strategies import assert_close, small_floats
@@ -107,8 +107,12 @@ def test_sigmoid(a: float) -> None:
     * It crosses 0 at 0.5
     * It is  strictly increasing.
     """
-    # TODO: Implement for Task 0.2.
-    raise NotImplementedError("Need to implement for Task 0.2")
+    assert 0. <= sigmoid(a) <= 1.
+    assert_close(1 - sigmoid(a), sigmoid(-a))
+    assert sigmoid(0) == 0.5
+    # непонятно, как проверять строгое возрастание функции, поэтому проверим это условие в некоторой окрестности точки a
+    delta = 1e-2
+    assert sigmoid(a - delta) < sigmoid(a) < sigmoid(a + delta)
 
 
 @pytest.mark.task0_2
